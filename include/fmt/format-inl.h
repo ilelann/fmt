@@ -1464,6 +1464,7 @@ template <> struct formatter<detail::bigint> {
   }
 };
 
+#ifndef FMT_NO_WCHART
 FMT_FUNC detail::utf8_to_utf16::utf8_to_utf16(string_view s) {
   for_each_codepoint(s, [this](uint32_t cp, string_view) {
     if (cp == invalid_code_point) FMT_THROW(std::runtime_error("invalid utf8"));
@@ -1478,6 +1479,7 @@ FMT_FUNC detail::utf8_to_utf16::utf8_to_utf16(string_view s) {
   });
   buffer_.push_back(0);
 }
+#endif
 
 FMT_FUNC void format_system_error(detail::buffer<char>& out, int error_code,
                                   const char* message) noexcept {

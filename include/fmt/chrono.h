@@ -1617,6 +1617,7 @@ OutputIt copy_unit(string_view unit, OutputIt out, Char) {
   return std::copy(unit.begin(), unit.end(), out);
 }
 
+#ifndef FMT_NO_WCHART
 template <typename OutputIt>
 OutputIt copy_unit(string_view unit, OutputIt out, wchar_t) {
   // This works when wchar_t is UTF-32 because units only contain characters
@@ -1624,6 +1625,7 @@ OutputIt copy_unit(string_view unit, OutputIt out, wchar_t) {
   utf8_to_utf16 u(unit);
   return std::copy(u.c_str(), u.c_str() + u.size(), out);
 }
+#endif
 
 template <typename Char, typename Period, typename OutputIt>
 OutputIt format_duration_unit(OutputIt out) {
