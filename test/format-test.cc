@@ -173,6 +173,7 @@ TEST(util_test, parse_nonnegative_int) {
   EXPECT_EQ(fmt::detail::parse_nonnegative_int(begin, end, -1), -1);
 }
 
+#ifndef FMT_NO_WCHART
 TEST(util_test, utf8_to_utf16) {
   auto u = fmt::detail::utf8_to_utf16("лошадка");
   EXPECT_EQ(L"\x043B\x043E\x0448\x0430\x0434\x043A\x0430", u.str());
@@ -192,6 +193,7 @@ TEST(util_test, utf8_to_utf16_empty_string) {
   EXPECT_EQ(L"", u.str());
   EXPECT_EQ(s.size(), u.size());
 }
+#endif
 
 TEST(util_test, allocator_ref) {
   using test_allocator_ref = allocator_ref<mock_allocator<int>>;

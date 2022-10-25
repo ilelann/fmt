@@ -1220,19 +1220,23 @@ inline auto thousands_sep(locale_ref loc) -> thousands_sep_result<Char> {
   auto result = thousands_sep_impl<char>(loc);
   return {result.grouping, Char(result.thousands_sep)};
 }
+#ifndef FMT_NO_WCHART
 template <>
 inline auto thousands_sep(locale_ref loc) -> thousands_sep_result<wchar_t> {
   return thousands_sep_impl<wchar_t>(loc);
 }
+#endif
 
 template <typename Char>
 FMT_API auto decimal_point_impl(locale_ref loc) -> Char;
 template <typename Char> inline auto decimal_point(locale_ref loc) -> Char {
   return Char(decimal_point_impl<char>(loc));
 }
+#ifndef FMT_NO_WCHART
 template <> inline auto decimal_point(locale_ref loc) -> wchar_t {
   return decimal_point_impl<wchar_t>(loc);
 }
+#endif
 
 // Compares two characters for equality.
 template <typename Char> auto equal2(const Char* lhs, const char* rhs) -> bool {
@@ -1321,6 +1325,8 @@ inline auto format_uint(It out, UInt value, int num_digits, bool upper = false)
   return detail::copy_str_noinline<Char>(buffer, buffer + num_digits, out);
 }
 
+#ifndef FMT_NO_WCHART
+
 // A converter from UTF-8 to UTF-16.
 class utf8_to_utf16 {
  private:
@@ -1333,6 +1339,8 @@ class utf8_to_utf16 {
   auto c_str() const -> const wchar_t* { return &buffer_[0]; }
   auto str() const -> std::wstring { return {&buffer_[0], size()}; }
 };
+
+#endif
 
 namespace dragonbox {
 

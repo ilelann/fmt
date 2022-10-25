@@ -33,12 +33,13 @@ template FMT_API void vformat_to(buffer<char>&, string_view,
                                  locale_ref);
 
 // Explicit instantiations for wchar_t.
-
+#ifndef FMT_NO_WCHART
 template FMT_API auto thousands_sep_impl(locale_ref)
     -> thousands_sep_result<wchar_t>;
 template FMT_API auto decimal_point_impl(locale_ref) -> wchar_t;
 
 template FMT_API void buffer<wchar_t>::append(const wchar_t*, const wchar_t*);
+#endif
 
 }  // namespace detail
 FMT_END_NAMESPACE
